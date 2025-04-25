@@ -10,4 +10,5 @@ const verifyRestaurant = async (req, res) => {
     }
 };
 
+
 module.exports = { verifyRestaurant };

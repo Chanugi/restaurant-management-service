@@ -1,4 +1,3 @@
-// models/menuItemModel.js
 const mongoose = require("mongoose");
 
 const menuItemSchema = new mongoose.Schema({
@@ -6,7 +5,8 @@ const menuItemSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
     price: { type: Number, required: true },
-    image: { type: String }, // Optional image URL
+    category: { type: String, required: true }, // 🆕 Category added (e.g., "Main Course", "Soup")
+    image: { type: String },
     isAvailable: { type: Boolean, default: true },
 }, { timestamps: true });
 

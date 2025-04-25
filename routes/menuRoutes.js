@@ -1,24 +1,3 @@
-// routes/menuRoutes.js
-/*const express = require("express");
-const { addMenuItem, getMenuItems, updateMenuItem, deleteMenuItem } = require("../controllers/menuController");
-
-const router = express.Router();
-
-// POST: Add menu item
-router.post("/", addMenuItem);
-
-// GET: Get all menu items for a restaurant
-router.get("/:restaurantId", getMenuItems);
-
-// PUT: Update a menu item
-router.put("/:id", updateMenuItem);
-
-// DELETE: Delete a menu item
-router.delete("/:id", deleteMenuItem);
-
-module.exports = router;
-*/
-
 const express = require("express");
 const {
     addMenuItem,
