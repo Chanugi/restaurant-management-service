@@ -415,6 +415,7 @@ const viewOrders = async (req, res) => {
     }
   };
   
+  /*
   const updateOrderStatus = async (req, res) => {
     try {
         const restaurantEmail = req.user?.email;
@@ -464,6 +465,58 @@ const viewOrders = async (req, res) => {
         });
     }
 };
+*/
+
+const updateOrderStatus = async (req, res) => {
+    try {
+      const restaurantEmail = req.user?.email;
+  
+      if (!restaurantEmail) {
+        return res.status(400).json({
+          message: "Restaurant email not found in token",
+        });
+      }
+  
+      // Optional: confirm that the restaurant exists
+      const restaurant = await Restaurant.findOne({ email: restaurantEmail });
+      if (!restaurant) {
+        return res.status(404).json({ message: "Restaurant not found" });
+      }
+  
+      const { orderId } = req.params;
+      const { status } = req.body;
+  
+      // Valid statuses according to the Order Service
+      const validStatuses = ["Pending", "Accepted", "Prepared", "Out for Delivery", "Delivered"];
+  
+      if (!status || !validStatuses.includes(status)) {
+        return res.status(400).json({
+          message: "Invalid status. Must be one of: Pending, Accepted, Prepared, Out for Delivery, Delivered.",
+        });
+      }
+  
+      // Send PATCH request to Order Service
+      const response = await axios.patch(
+        `https://ordermanagementservice.onrender.com/api/orders/${orderId}/update-status`,
+        { status }
+      );
+  
+      res.status(200).json({
+        message: "Order status successfully updated",
+        updatedOrder: response.data,
+      });
+    } catch (error) {
+      console.error("Error updating order status:", error.message);
+      if (error.response) {
+        console.error("Order Service Error Response:", error.response.data);
+      }
+      res.status(500).json({
+        message: "Error updating order status",
+        error: error.message,
+      });
+    }
+  };
+  
 
 
 /*
