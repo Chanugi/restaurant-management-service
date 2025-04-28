@@ -40,6 +40,7 @@ const {
     getMyProfile,
     getRestaurantLocation,
     getAllRestaurants,
+    getOneRestaurant,
     updateRestaurant,
     uploadRestaurantImage
 } = require("../controllers/restaurantController");
@@ -61,7 +62,8 @@ router.get("/:restaurantId/location", getRestaurantLocation); // Add this route
 // Update restaurant details (new route for updating restaurant information)
 router.patch("/:id", verifyToken, updateRestaurant);
 
-
+//get one restaurant
+router.get('/:id', getOneRestaurant);
 
 
 module.exports = router;

@@ -467,6 +467,7 @@ const viewOrders = async (req, res) => {
 };
 */
 
+//after add prepared status
 const updateOrderStatus = async (req, res) => {
     try {
       const restaurantEmail = req.user?.email;
@@ -516,7 +517,6 @@ const updateOrderStatus = async (req, res) => {
       });
     }
   };
-  
 
 
 /*
@@ -739,7 +739,22 @@ const updateRestaurant = async (req, res) => {
     }
 };
 
+//get one restaurant
+const getOneRestaurant = async (req, res) => {
+    try {
+        const { id } = req.params; // assuming you pass the restaurant ID in the URL
+        
+        const restaurant = await Restaurant.findById(id);
+        
+        if (!restaurant) {
+            return res.status(404).json({ message: "Restaurant not found" });
+        }
 
+        return res.status(200).json(restaurant);
+    } catch (error) {
+        return res.status(500).json({ message: "Error retrieving restaurant", error: error.message });
+    }
+};
 
 
 module.exports = {
@@ -751,6 +766,7 @@ module.exports = {
     getMyProfile,
     uploadRestaurantImage: upload.single("image"),
     getAllRestaurants,
+    getOneRestaurant,
     getRestaurantLocation,
     updateRestaurant
 };
